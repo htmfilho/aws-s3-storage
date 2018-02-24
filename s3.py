@@ -13,9 +13,11 @@ class BackupS3:
 
     def __init__(self, folder_path, remote_folder_path):
         self.s3 = boto3.resource('s3')
-        self.bucket = self.s3.Bucket('hildeberto')
         self.folder_path = folder_path
         self.remote_folder_path = remote_folder_path
+        bar = self.remote_folder_path.index("/")
+        self.bucket = self.s3.Bucket(self.folder_path[:bar])
+        
 
     def upload_file(self, file_path):
         total_uploaded = len(self.files_uploaded)
